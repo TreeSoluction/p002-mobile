@@ -34,13 +34,6 @@ export default function RootLayout() {
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
           injectedJavaScript={`
-          // Remove meta viewport existente
-          var metas = document.getElementsByTagName('meta');
-          for (var i = metas.length - 1; i >= 0; i--) {
-            if (metas[i].name === 'viewport') {
-              metas[i].parentNode.removeChild(metas[i]);
-            }
-          }
           // Adiciona meta viewport travada
           var meta = document.createElement('meta');
           meta.name = 'viewport';
@@ -48,8 +41,11 @@ export default function RootLayout() {
           document.getElementsByTagName('head')[0].appendChild(meta);
 
           // Trava scroll do body/html, mas permite scroll em elementos internos
-          document.body.style.overflow = 'hidden';
-          document.documentElement.style.overflow = 'hidden';
+          document.body.style.overflowX = 'hidden'; // trava scroll horizontal
+          document.body.style.overflowY = 'auto';   // permite scroll vertical
+
+          document.documentElement.style.overflowX = 'hidden';
+          document.documentElement.style.overflowY = 'auto';
 
           // Desabilita zoom por gesto
           document.addEventListener('gesturestart', function(e) { e.preventDefault(); });
